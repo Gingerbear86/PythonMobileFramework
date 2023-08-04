@@ -13,7 +13,7 @@ automation_methods.create_android_driver()
 
 automation_elements = AutomationElements()
 
-automation_methods.driver.get("https://quasar.dev")
+automation_methods.driver.get("http://quasar.dev")
 time.sleep(5)
 
 # Locate and click the "More" button

@@ -130,11 +130,11 @@ class AutomationElements:
     # Mobile locators
 
     mobile_more_button_xpath = (
-        "//android.widget.Button[@text='More']"
+        "//span[@class='block' and text()='More']"
     )
 
     mobile_docs_button_xpath = (
-        "//android.widget.TextView[@text='Docs']"
+        "/html/body/div[4]/div/div/a[1]/div[2]"
     )
 
     # Add other mobile locators here...

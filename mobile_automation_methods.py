@@ -6,7 +6,6 @@ that are used in my automated mobile testing.
 import configparser
 from appium import webdriver as appium_webdriver
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.options.android import UiAutomator2Options
 from combined_automation_methods import CombinedAutomationMethods
 
 # Read the config file
@@ -39,25 +38,22 @@ class MobileAutomationMethods(CombinedAutomationMethods):
         """
         Makes my android driver
         """
-        options = UiAutomator2Options()
-        options.automation_name = 'UiAutomator2'
-        options.platform_name = 'Android'
-        options.app_package = config.get('Android', 'app_package')
-        options.app_activity = config.get('Android', 'app_activity')
-        options.platformVersion = config.get('Android', 'platform_version')
-        options.udid = config.get('Android', 'udid')
-        options.device_name = 'Android'
-        options.no_reset = True
-        options.ensure_webviews_have_pages = False
-        options.native_web_screenshot = False
-        options.waitForIdleTimeout = 0
-        options.new_command_timeout = 0
-        options.directConnect = True
+        options = {}
+        options["appium:automationName"] = "UiAutomator2"
+        options["appium:platformName"] = "Android"
+        options["appium:deviceName"] = "emulator-5554"
+        options["appium:browserName"] = "Chrome"
+        options["appium:noReset"] = True
+        options["appium:newCommandTimeout"] = 0
+        options["appium:connectHardwareKeyboard"] = True
+
         if custom_opts is not None:
-            options.load_capabilities(custom_opts)
+            for key in custom_opts:
+                options[key] = custom_opts[key]
+
         self.driver = appium_webdriver.Remote(
-           command_executor=f'http://{APPIUM_HOST}:{APPIUM_PORT}/wd/hub',
-           options=options
+           command_executor='http://localhost:4723',
+           desired_capabilities=options
         )
 
     def clear_text(self, element):
