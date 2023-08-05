@@ -6,6 +6,8 @@ that are used in my automated mobile testing.
 import configparser
 from appium import webdriver as appium_webdriver
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from combined_automation_methods import CombinedAutomationMethods
 
 # Read the config file
@@ -38,14 +40,15 @@ class MobileAutomationMethods(CombinedAutomationMethods):
         """
         Makes my android driver
         """
-        options = {}
-        options["appium:automationName"] = "UiAutomator2"
-        options["appium:platformName"] = "Android"
-        options["appium:deviceName"] = "emulator-5554"
-        options["appium:browserName"] = "Chrome"
-        options["appium:noReset"] = True
-        options["appium:newCommandTimeout"] = 0
-        options["appium:connectHardwareKeyboard"] = True
+        options = {
+            "automationName": "UiAutomator2",
+            "platformName": "Android",
+            "deviceName": "emulator-5554",
+            "browserName": "Chrome",
+            "noReset": True,
+            "newCommandTimeout": 0,
+            "connectHardwareKeyboard": True,
+        }
 
         if custom_opts is not None:
             for key in custom_opts:
@@ -83,10 +86,11 @@ class MobileAutomationMethods(CombinedAutomationMethods):
                                            )
         return element
 
-    def find_element_by_xpath(self, selector):
+    def find_element_by_xpath(self, selector, timeout=10):
         """
         Finds an element in the mobile app using XPATH
         """
+        element = WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((AppiumBy.XPATH, selector)))
         element = self.driver.find_element(AppiumBy.XPATH, selector)
         return element
 

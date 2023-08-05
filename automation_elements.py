@@ -137,4 +137,12 @@ class AutomationElements:
         "/html/body/div[4]/div/div/a[1]/div[2]"
     )
 
+    mobile_hamburger_xpath = (
+        "//*[@id='q-app']/div/header/div[2]/button"
+    )
+
+    mobile_vue_components_xpath = (
+        "//*[@id='q-app']/div/div[2]/div[1]/aside/div/div[2]/div[5]/div/div[1]/div[3]/div"
+    )
+
     # Add other mobile locators here...
